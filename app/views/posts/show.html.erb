@@ -1,2 +1,40 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<h1>Post</h1>
+<div class="card md-12 md-3">
+    <div class="card-body">
+        <h4 class="card-title"><%= @post.title %></h4>
+        <p class="card-text"><%= @post.content%> </p>
+        <p class="card-text">
+            <strong>Last Update:</strong>
+            <%= @post.updated_at%> 
+        </p>
+        <a href="<%= edit_post_path(@post) %>" class="btn btn-primary">Update</a>
+        <%= link_to 'delete', @post, class: "btn btn-danger", method: :delete%>
+    </div>
+</div>
+<h1>Comments</h1>
+<%= form_with(url: "/comments", method: "post") do %>
+    <div class="form-group">
+        <%= text_area_tag(:comment, nil, rows: 3, class: "form-control") %>
+         <%= hidden_field_tag 'post_id', @post.id %>
+    </div>
+    <%= submit_tag( "Comment", class: "btn btn-info btn-block") %>
+<% end %>
+<br>
+<% if @post.comments.any? %>
+    <% @post.comments.each do |comment| %>
+        <div class="card md-12 md-3">
+            <div class="card-body">
+                <p class="card-text"><%= comment.comment%> </p>
+                <%= link_to 'delete', comment, class: "btn btn-danger", method: :delete%>
+            </div>
+        </div>
+        <br>
+    <% end %>
+<% else %>
+    <div class="card md-12 md-3">
+        <div class="card-header">
+            No Ccomments
+        </div>
+    </div>
+<% end %>
+

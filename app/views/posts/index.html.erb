@@ -1,1 +1,13 @@
 <h1>Root Home page</h1>
+<% @posts.each do |post| %>
+    <div class="card md-12 md-3">
+        <div class="card-body">
+            <h5 class="card-title"><%= post.title %></h5>
+            <%= link_to 'see more...', post, method: :get%>
+            <br>
+            <a href="<%= edit_post_path(post) %>" class="btn btn-primary">Update</a>
+            <%= link_to 'delete', post, class: "btn btn-danger", method: :delete%>
+        </div>
+    </div>
+    <br>
+<% end %>
